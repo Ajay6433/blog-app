@@ -3,13 +3,13 @@ import React from 'react'
 
 const Navbar = () => {
   return (
-    <div className='w-full h-[80px] flex justify-between items-center p-6 gap-4 shadow-md'>
+    <div className='w-full bg-white h-[80px] z-50 flex justify-between items-center p-6 gap-4 shadow-md'>
         <div>
-            <Link href={"/"} className='text-4xl font-bold'>Blog App</Link>
+            <Link href={"/"} className='text-4xl font-semibold'>Blog App</Link>
         </div>
         <div className=' w-100 flex justify-between items-center p-3 gap-4'>
             <Link href={"/"}>Home</Link>
-            <Link href={"#"}>Create Blogs</Link>
+            <Link href={"/createBlog"}>Create Blogs</Link>
             <Link href={"#"}>View Blogs</Link>
         </div>
     </div>
