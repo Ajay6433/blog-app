@@ -10,7 +10,7 @@ const Navbar = () => {
         <div className=' w-100 flex justify-between items-center p-3 gap-4'>
             <Link href={"/"}>Home</Link>
             <Link href={"/createBlog"}>Create Blogs</Link>
-            <Link href={"#"}>View Blogs</Link>
+            <Link href={"/allBlogs"}>View Blogs</Link>
         </div>
     </div>
   )

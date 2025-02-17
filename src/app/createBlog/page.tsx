@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const Page = () => {
-
-  const API_URL = "http://192.168.1.11:4000/api/v1/createBlog";
+  const API_URL = "http://localhost:4000/api/v1/createBlog";
   const [formData, setFormData] = useState({
     title: "",
     author: "",
@@ -26,26 +26,20 @@ const Page = () => {
   };
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
 
     try {
-      const response = await axios.post(
-        API_URL,
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(API_URL, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      setMessage("Blog submitted successfully!");
+      toast.success("Blog submitted successfully!");
       console.log("Server Response:", response.data);
 
       // Reset form after submission
@@ -57,7 +51,7 @@ const Page = () => {
       });
     } catch (error) {
       console.error("Error submitting blog:", error);
-      setMessage("Failed to submit blog. Please try again.");
+      toast.error("Failed to submit blog. Please try again.");
     } finally {
       setLoading(false);
     }
