@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 // Define TypeScript Interface for Blogs
@@ -70,13 +71,13 @@ const BlogsPage = () => {
               {/* Buttons */}
               <div className="mt-4 flex gap-2">
                 <button
-                  onClick={() => router.push(`/blogs/${blog._id}`)}
+                  onClick={() => router.push(`/blog/${blog._id}`)}
                   className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
                 >
                   View
                 </button>
                 <button
-                  onClick={() => router.push(`/blogs/edit/${blog._id}`)}
+                  onClick={() => router.push(`/edit/${blog._id}`)}
                   className="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition"
                 >
                   Update
@@ -106,12 +107,12 @@ const BlogsPage = () => {
 
               {/* Buttons */}
               <div className="mt-4 flex gap-2">
-                <button
-                  onClick={() => router.push(`/blog/${blog._id}`)}
-                  className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-                >
-                  View
-                </button>
+                 {/* View Blog Button */}
+    <Link href={`/blogs/${blog._id}`}>
+      <button className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+        View Full Blog
+      </button>
+    </Link>
                 <button
                   onClick={() => router.push(`/blogs/edit/${blog._id}`)}
                   className="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition"
