@@ -23,7 +23,10 @@ const BlogDetails = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await axios.get<{ data: Blog }>(`http://localhost:4000/api/v1/blog/${id}`);
+        const response = await axios.get<{ data: Blog }>(
+          `http://localhost:4000/api/v1/blog/${id}`
+        );
+        toast.success(`${response.data.data.title} Blog fetched successfully!`);
         setBlog(response.data.data);
       } catch (err) {
         toast.error("Error fetching blog:");
@@ -44,8 +47,12 @@ const BlogDetails = () => {
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold">{blog?.title}</h1>
       <p className="text-gray-600">by {blog?.author}</p>
-      <div className="mt-4">{blog?.blogContent}</div>
-      <p className={`mt-4 font-semibold ${blog?.isPublic ? "text-green-600" : "text-red-600"}`}>
+      <div className="mt-4 text-justify">{blog?.blogContent}</div>
+      <p
+        className={`mt-4 font-semibold ${
+          blog?.isPublic ? "text-green-600" : "text-red-600"
+        }`}
+      >
         {blog?.isPublic ? "Public" : "Private"}
       </p>
     </div>

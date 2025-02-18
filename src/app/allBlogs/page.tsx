@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 // Define TypeScript Interface for Blogs
 interface Blog {
@@ -41,9 +42,12 @@ const BlogsPage = () => {
 
   // Function to delete a blog
   const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this blog?")) return;
+
     try {
-      await axios.delete(`http://localhost:4000/api/v1/blogs/${id}`);
+      await axios.delete(`http://localhost:4000/api/v1/deleteBlog/${id}`);
       setBlogs(blogs.filter((blog) => blog._id !== id)); // Remove from UI
+      toast.success("Blog deleted successfully!");
     } catch (error) {
       console.error("Error deleting blog:", error);
     }
@@ -62,29 +66,32 @@ const BlogsPage = () => {
         <h2 className="text-2xl font-semibold mb-4">Public Blogs</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {publicBlogs.map((blog) => (
-            <div key={blog._id} className="p-6 bg-white shadow-md rounded-md border border-green-500">
+            <div
+              key={blog._id}
+              className="p-6 bg-white shadow-md rounded-md border border-green-500"
+            >
               <h3 className="text-xl font-bold">{blog.title}</h3>
               <p className="text-gray-600">by {blog.author}</p>
               <p className="mt-2">{blog.blogContent.slice(0, 100)}...</p>
               <span className="text-green-600 font-semibold">Public</span>
 
               {/* Buttons */}
-              <div className="mt-4 flex gap-2">
+              <div className="mt-4 w-full flex justify-between">
                 <button
                   onClick={() => router.push(`/blog/${blog._id}`)}
-                  className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                  className=" w-[75px] p-2 bg-black m-auto text-white py-2  hover:bg-gray-800 transition"
                 >
                   View
                 </button>
                 <button
                   onClick={() => router.push(`/edit/${blog._id}`)}
-                  className="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition"
+                  className=" w-[75px] p-2 bg-black m-auto text-white py-2  hover:bg-gray-800 transition"
                 >
                   Update
                 </button>
                 <button
                   onClick={() => handleDelete(blog._id)}
-                  className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+                  className=" w-[75px] p-2 bg-black m-auto text-white py-2  hover:bg-gray-800 transition"
                 >
                   Delete
                 </button>
@@ -99,29 +106,33 @@ const BlogsPage = () => {
         <h2 className="text-2xl font-semibold mb-4">Private Blogs</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {privateBlogs.map((blog) => (
-            <div key={blog._id} className="p-6 bg-gray-200 shadow-md rounded-md border border-red-500">
+            <div
+              key={blog._id}
+              className="p-6 bg-gray-200 shadow-md rounded-md border border-red-500"
+            >
               <h3 className="text-xl font-bold">{blog.title}</h3>
               <p className="text-gray-700">by {blog.author}</p>
               <p className="mt-2">{blog.blogContent.slice(0, 100)}...</p>
               <span className="text-red-600 font-semibold">Private</span>
 
               {/* Buttons */}
-              <div className="mt-4 flex gap-2">
-                 {/* View Blog Button */}
-    <Link href={`/blogs/${blog._id}`}>
-      <button className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-        View Full Blog
-      </button>
-    </Link>
+              <div className="mt-4 w-full flex justify-between">
+                {/* View Blog Button */}
                 <button
-                  onClick={() => router.push(`/blogs/edit/${blog._id}`)}
-                  className="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition"
+                  onClick={() => router.push(`/blog/${blog._id}`)}
+                  className=" w-[75px] p-2 bg-black m-auto text-white py-2  hover:bg-gray-800 transition"
+                >
+                  View
+                </button>
+                <button
+                  onClick={() => router.push(`/edit/${blog._id}`)}
+                  className="w-[75px] p-2 bg-black m-auto text-white py-2  hover:bg-gray-800 transition"
                 >
                   Update
                 </button>
                 <button
                   onClick={() => handleDelete(blog._id)}
-                  className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+                  className="w-[75px] p-2 bg-black m-auto text-white py-2  hover:bg-gray-800 transition"
                 >
                   Delete
                 </button>
