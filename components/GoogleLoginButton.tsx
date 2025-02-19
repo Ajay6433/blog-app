@@ -2,9 +2,13 @@
 
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const GoogleLoginButton = () => {
+
+  const router = useRouter();
+  
   const handleSuccess = async (response: any) => {
     try {
       const res = await axios.post(
@@ -15,7 +19,7 @@ const GoogleLoginButton = () => {
       );
 
       toast.success("Login Successful!");
-      console.log("Server Response:", res.data);
+      router.push("/allBlogs"); // Redirect to home page
 
       // Store token in localStorage or context (optional)
       localStorage.setItem("token", res.data.token);
