@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 const Hero = () => {
   let data = [
@@ -39,7 +40,7 @@ const Hero = () => {
             width={100}
             height={100}
             className="mb-4 md:mb-0"
-          />
+            />
           <div>
             <h2 className="text-2xl md:text-3xl font-semibold mb-2">
               {item.title}
@@ -50,6 +51,7 @@ const Hero = () => {
           </div>
         </div>
       ))}
+      <GoogleLoginButton/>
     </div>
   );
 };
