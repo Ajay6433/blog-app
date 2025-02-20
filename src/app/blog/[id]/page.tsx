@@ -44,7 +44,7 @@ const BlogDetails = () => {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container h-[500px] mx-auto p-6">
       <h1 className="text-3xl font-bold">{blog?.title}</h1>
       <p className="text-gray-600">by {blog?.author}</p>
       <div className="mt-4 text-justify">{blog?.blogContent}</div>

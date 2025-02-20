@@ -17,6 +17,8 @@ interface Blog {
 const EditBlogPage = () => {
   const { id } = useParams(); // Get blog ID from URL
   const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const [formData, setFormData] = useState<Blog>({
     _id: "",
     title: "",
@@ -25,6 +27,17 @@ const EditBlogPage = () => {
     isPublic: false,
   });
   const [loading, setLoading] = useState(true);
+  // ✅ Check authentication on page load
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // Get token from localStorage
+
+    if (!token) {
+      toast.error("Please log in first.");
+      router.push("/login"); // Redirect to login
+    } else {
+      setIsAuthenticated(true);
+    }
+  }, [router]);
 
   // Fetch the blog data
   useEffect(() => {
@@ -93,7 +106,10 @@ const EditBlogPage = () => {
       }, 1500);
     } catch (error) {
       console.error("Error updating blog:", error);
-      toast.error(error.response?.data?.message || "Failed to update blog.");
+      const errorMessage =
+        (error as any)?.response?.data?.message || "Failed to update blog.";
+
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -157,7 +173,9 @@ const EditBlogPage = () => {
               <div className="w-10 h-5 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gray-300 rounded-full peer-checked:bg-black peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
             </label>
             <span
-              className={`text-sm font-semibold ${formData.isPublic ? "text-green-600" : "text-red-600"}`}
+              className={`text-sm font-semibold ${
+                formData.isPublic ? "text-green-600" : "text-red-600"
+              }`}
             >
               {formData.isPublic ? "Public" : "Private"}
             </span>
