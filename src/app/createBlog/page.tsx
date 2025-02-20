@@ -32,10 +32,20 @@ const Page = () => {
     e.preventDefault();
     setLoading(true);
 
+    const token = localStorage.getItem("token"); // Get token from localStorage
+
+    if (!token) {
+      toast.error("Unauthorized! Please log in first.");
+      setLoading(false);
+      return;
+    }
+
+
     try {
       const response = await axios.post(API_URL, formData, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Send token in header
         },
       });
 
