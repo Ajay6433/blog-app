@@ -64,11 +64,26 @@ const EditBlogPage = () => {
     e.preventDefault();
     setLoading(true);
 
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("Unauthorized! Please log in first.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await axios.put(
         `http://localhost:4000/api/v1/updateBlog/${id}`,
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Send token in headers
+          },
+        }
       );
+
       toast.success("Blog updated successfully!");
       console.log("Update Response:", response.data);
 
@@ -78,7 +93,7 @@ const EditBlogPage = () => {
       }, 1500);
     } catch (error) {
       console.error("Error updating blog:", error);
-      toast.error("Failed to update blog.");
+      toast.error(error.response?.data?.message || "Failed to update blog.");
     } finally {
       setLoading(false);
     }
@@ -142,9 +157,7 @@ const EditBlogPage = () => {
               <div className="w-10 h-5 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gray-300 rounded-full peer-checked:bg-black peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
             </label>
             <span
-              className={`text-sm font-semibold ${
-                formData.isPublic ? "text-green-600" : "text-red-600"
-              }`}
+              className={`text-sm font-semibold ${formData.isPublic ? "text-green-600" : "text-red-600"}`}
             >
               {formData.isPublic ? "Public" : "Private"}
             </span>
