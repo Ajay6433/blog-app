@@ -7,42 +7,47 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-interface RegisterFormData {
-  name: string;
+interface LoginFormData {
   email: string;
   password: string;
 }
 
-export default function RegisterPage() {
-  const { register, handleSubmit } = useForm<RegisterFormData>();
+export default function LoginPage() {
+  const { register, handleSubmit } = useForm<LoginFormData>();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // Handle Normal Registration
-  const onSubmit = async (data: RegisterFormData) => {
+  // Handle Normal Login
+  const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/auth/register", data);
-      toast.success("Registration successful!");
-      router.push("/login");
+      const res = await axios.post("http://localhost:4000/api/v1/auth/login", data);
+      toast.success("Login successful!");
       console.log("Response:", res.data);
+
+      // Store token & redirect
+      localStorage.setItem("token", res.data.token);
+      router.push("/allBlogs");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Login failed.");
       console.error("Error:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle Google Register/Login
+  // Handle Google Login
   const handleGoogleLogin = async (response: any) => {
     try {
       const res = await axios.post("http://localhost:4000/api/v1/auth/googleLogin", {
         credential: response.credential,
       });
       toast.success("Google Login Successful!");
-      router.push("/allBlogs");
       console.log("Google Login Response:", res.data);
+
+      // Store token & redirect
+      localStorage.setItem("token", res.data.token);
+      router.push("/allBlogs");
     } catch (error) {
       toast.error("Google login failed.");
       console.error("Google Login Error:", error);
@@ -50,18 +55,12 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="h-[550px] flex items-center justify-center">
-      <div className="w-full max-w-md p-8 ">
-        <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
+    <div className="h-[500px] flex items-center justify-center">
+      <div className="w-full max-w-md p-8">
+        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
 
-        {/* Registration Form */}
+        {/* Login Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Full Name"
-            {...register("name", { required: true })}
-            className="w-full p-2 text-center border focus:ring-2 focus:ring-gray-900 focus:outline-none"
-          />
           <input
             type="email"
             placeholder="Email"
@@ -77,10 +76,10 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            className="w-full bg-black text-white p-3  hover:bg-gray-800 transition"
+            className="w-full bg-black text-white p-3 hover:bg-gray-800 transition"
             disabled={loading}
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
@@ -90,7 +89,7 @@ export default function RegisterPage() {
           <hr className="flex-grow border-gray-700" />
         </div>
 
-        {/* Google Register/Login */}
+        {/* Google Login */}
         <div className="flex justify-center">
           <GoogleLogin onSuccess={handleGoogleLogin} onError={() => toast.error("Google login failed")} />
         </div>
