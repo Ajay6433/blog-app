@@ -1,11 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { Menu, X } from "lucide-react"; // Icons for mobile menu
+import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react"; // Mobile menu icons
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname(); // Detects when route changes
+
+  // Function to check authentication status
+  const checkAuth = () => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token); // If token exists, user is authenticated
+  };
+
+  // Check auth on component mount & re-check on route change
+  useEffect(() => {
+    checkAuth();
+  }, [pathname]); // Re-run checkAuth whenever the route changes
+
+  // Logout function
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    router.push("/login");
+  };
 
   return (
     <nav className="w-full bg-white h-[80px] z-50 flex justify-between items-center p-6 shadow-md">
@@ -17,11 +39,28 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Menu */}
-      <div className="hidden md:flex gap-6">
-        <Link href={"/"} className="hover:text-gray-600">Home</Link>
-        <Link href={"/createBlog"} className="hover:text-gray-600">Create Blog</Link>
-        <Link href={"/allBlogs"} className="hover:text-gray-600">View Blogs</Link>
-      </div>
+      {isAuthenticated ? (
+        <div className="hidden md:flex items-center gap-6">
+          <Link href={"/"} className="hover:text-gray-600">Home</Link>
+          <Link href={"/createBlog"} className="hover:text-gray-600">Create Blog</Link>
+          <Link href={"/allBlogs"} className="hover:text-gray-600">View Blogs</Link>
+          <button
+            onClick={handleLogout}
+            className="bg-black text-white px-4 py-2  hover:bg-gray-800 transition"
+          >
+            Logout
+          </button>
+        </div>
+      ) : (
+        <div className="hidden md:flex">
+          <Link
+            href={"/login"}
+            className="bg-black text-white px-4 py-2  hover:bg-gray-800 transition"
+          >
+            Login
+          </Link>
+        </div>
+      )}
 
       {/* Mobile Menu Button */}
       <div className="md:hidden">
@@ -33,9 +72,30 @@ const Navbar = () => {
       {/* Mobile Dropdown Menu */}
       {isOpen && (
         <div className="absolute top-20 left-0 w-full bg-white shadow-lg p-4 flex flex-col items-center space-y-4 md:hidden">
-          <Link href={"/"} className="hover:text-gray-600" onClick={() => setIsOpen(false)}>Home</Link>
-          <Link href={"/createBlog"} className="hover:text-gray-600" onClick={() => setIsOpen(false)}>Create Blog</Link>
-          <Link href={"/allBlogs"} className="hover:text-gray-600" onClick={() => setIsOpen(false)}>View Blogs</Link>
+          {isAuthenticated ? (
+            <>
+              <Link href={"/"} className="hover:text-gray-600" onClick={() => setIsOpen(false)}>Home</Link>
+              <Link href={"/createBlog"} className="hover:text-gray-600" onClick={() => setIsOpen(false)}>Create Blog</Link>
+              <Link href={"/allBlogs"} className="hover:text-gray-600" onClick={() => setIsOpen(false)}>View Blogs</Link>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsOpen(false);
+                }}
+                className="bg-black text-white px-4 py-2  hover:bg-gray-800 transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              href={"/login"}
+              className="bg-black text-white px-4 py-2  hover:bg-gray-800 transition"
+              onClick={() => setIsOpen(false)}
+            >
+              Login
+            </Link>
+          )}
         </div>
       )}
     </nav>

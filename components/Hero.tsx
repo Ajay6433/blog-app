@@ -51,7 +51,6 @@ const Hero = () => {
           </div>
         </div>
       ))}
-      <GoogleLoginButton/>
     </div>
   );
 };
