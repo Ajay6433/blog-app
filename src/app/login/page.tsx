@@ -26,7 +26,7 @@ export default function LoginPage() {
       console.log("Response:", res.data);
 
       // Store token & redirect
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.data.token);
       router.push("/allBlogs");
     } catch (error) {
       const errorMessage =

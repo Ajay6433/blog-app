@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import GoogleLoginButton from "./GoogleLoginButton";
 
 const Hero = () => {
   let data = [
