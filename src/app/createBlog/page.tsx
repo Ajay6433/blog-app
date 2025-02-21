@@ -63,6 +63,7 @@ const Page = () => {
       });
 
       toast.success("Blog submitted successfully!");
+      router.push("/allBlogs");
       console.log("Server Response:", response.data);
 
       // Reset form after submission
