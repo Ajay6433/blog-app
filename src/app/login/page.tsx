@@ -29,8 +29,10 @@ export default function LoginPage() {
       localStorage.setItem("token", res.data.token);
       router.push("/allBlogs");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed.");
+      const errorMessage =
+      (error as any)?.response?.data?.message || "Failed to Login.";
       console.error("Error:", error);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
