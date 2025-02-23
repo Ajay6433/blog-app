@@ -20,6 +20,7 @@ const BlogDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  
   useEffect(() => {
     const fetchBlog = async () => {
       try {
@@ -28,7 +29,7 @@ const BlogDetails = () => {
         );
         setBlog(response.data.data);
       } catch (err) {
-        toast.error("Error fetching blog:");
+        toast.error("Blog not found.");
         console.error("Error fetching blog:", err);
         setError("Blog not found.");
       } finally {
@@ -39,7 +40,6 @@ const BlogDetails = () => {
     if (id) fetchBlog();
   }, [id]);
   
-  toast.success(`Blog fetched successfully!`);
   if (loading) return <p className="text-center text-lg">Loading...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
@@ -47,7 +47,7 @@ const BlogDetails = () => {
     <div className="container min-h-[550px] mx-auto p-6">
       <h1 className="text-3xl font-bold">{blog?.title}</h1>
       <p className="text-gray-600">by {blog?.author}</p>
-      <div className="mt-4 text-justify">{blog?.blogContent}</div>
+      <div className="mt-4 text-justify whitespace-pre-wrap">{blog?.blogContent}</div>
       <p
         className={`mt-4 font-semibold ${
           blog?.isPublic ? "text-green-600" : "text-red-600"
@@ -57,6 +57,7 @@ const BlogDetails = () => {
       </p>
     </div>
   );
+  
 };
 
 export default BlogDetails;
