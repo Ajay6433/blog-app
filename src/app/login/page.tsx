@@ -23,7 +23,6 @@ export default function LoginPage() {
     try {
       const res = await axios.post("http://localhost:4000/api/v1/auth/login", data);
       toast.success("Login successful!");
-      console.log("Response:", res.data);
 
       // Store token & redirect
       localStorage.setItem("token", res.data.data.token);
@@ -45,7 +44,6 @@ export default function LoginPage() {
         credential: response.credential,
       });
       toast.success("Google Login Successful!");
-      console.log("Google Login Response:", res.data);
 
       // Store token & redirect
       localStorage.setItem("token", res.data.token);

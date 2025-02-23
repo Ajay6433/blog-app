@@ -25,8 +25,7 @@ export default function RegisterPage() {
       const res = await axios.post("http://localhost:4000/api/v1/auth/register", data);
       toast.success("Registration successful!");
       router.push("/login");
-      console.log("Response:", res.data);
-    } catch (error) {
+    } catch (error:any) {
       toast.error(error.response.data.message);
       console.error("Error:", error);
     } finally {
@@ -41,7 +40,6 @@ export default function RegisterPage() {
         credential: response.credential,
       });
       toast.success("Google Login Successful!");
-      console.log("Google Login Response:", res.data);
        // Store token & redirect
        localStorage.setItem("token", res.data.token);
        router.push("/allBlogs");

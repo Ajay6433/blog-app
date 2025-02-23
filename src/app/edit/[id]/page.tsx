@@ -98,7 +98,6 @@ const EditBlogPage = () => {
       );
 
       toast.success("Blog updated successfully!");
-      console.log("Update Response:", response.data);
 
       // Redirect to blog details after update
       setTimeout(() => {
