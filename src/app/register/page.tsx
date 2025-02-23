@@ -73,6 +73,8 @@ export default function RegisterPage() {
           <input
             type="password"
             placeholder="Password"
+             pattern=".{8,}"
+    title="Password must be at least 8 characters long"
             {...register("password", { required: true })}
             className="w-full p-2 text-center border focus:ring-2 focus:ring-gray-900 focus:outline-none"
           />

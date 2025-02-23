@@ -81,7 +81,7 @@ const MyBlogsPage = () => {
 
   if (blogs.length === 0) {
     return (
-      <div className="text-center text-gray-600 text-lg mt-10">
+      <div className="text-center min-h-[550px] text-gray-600 text-lg mt-10">
         <p>You don't have any blogs yet. Start writing some!</p>
         <button
           onClick={() => router.push('/createBlog')}

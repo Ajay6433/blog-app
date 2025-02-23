@@ -21,13 +21,6 @@ const BlogsPage = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
 
-      // const token = localStorage.getItem('token');
-      // if (!token) {
-      //   toast.error('Unauthorized! Please log in first.');
-      //   router.push('/login');
-      //   return;
-      // }
-
 
       try {
         const response = await axios.get<{ data: Blog[] }>('http://localhost:4000/api/v1/allBlogs');
@@ -50,7 +43,7 @@ const BlogsPage = () => {
 
   if (blogs.length === 0) {
     return (
-      <div className="text-center text-gray-600 text-lg mt-10">
+      <div className="text-center min-h-[550px] text-gray-600 text-lg mt-10">
         <p>No public blogs available at the moment. Please check back later.</p>
       </div>
     );
