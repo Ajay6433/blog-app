@@ -21,7 +21,7 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/auth/login", data);
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + `/auth/login`, data);
       toast.success("Login successful!");
 
       // Store token & redirect
@@ -40,7 +40,7 @@ export default function LoginPage() {
   // Handle Google Login
   const handleGoogleLogin = async (response: any) => {
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/auth/googleLogin", {
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + `/auth/googleLogin`, {
         credential: response.credential,
       });
       toast.success("Google Login Successful!");

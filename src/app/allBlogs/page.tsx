@@ -23,7 +23,7 @@ const BlogsPage = () => {
 
 
       try {
-        const response = await axios.get<{ data: Blog[] }>('http://localhost:4000/api/v1/allBlogs');
+        const response = await axios.get<{ data: Blog[] }>(process.env.NEXT_PUBLIC_API_URL + '/allBlogs');
         if (Array.isArray(response.data.data)) {
           // Filter to include only public blogs
           const publicBlogs = response.data.data.filter(blog => blog.isPublic);

@@ -29,7 +29,7 @@ const MyBlogsPage = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:4000/api/v1/myBlogs', {
+        const response = await axios.get(process.env.NEXT_PUBLIC_API_URL + `/myBlogs`, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const MyBlogsPage = () => {
     }
 
     try {
-      const response = await axios.delete(`http://localhost:4000/api/v1/deleteBlog/${id}`, {
+      const response = await axios.delete(process.env.NEXT_PUBLIC_API_URL + `/deleteBlog/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',

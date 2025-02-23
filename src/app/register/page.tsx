@@ -22,7 +22,7 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterFormData) => {
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/auth/register", data);
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + `/auth/register`, data);
       toast.success("Registration successful!");
       router.push("/login");
     } catch (error:any) {
@@ -36,7 +36,7 @@ export default function RegisterPage() {
   // Handle Google Register/Login
   const handleGoogleLogin = async (response: any) => {
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/auth/googleLogin", {
+      const res = await axios.post(process.env.NEXT_PUBLIC_API_URL + `/auth/googleLogin`, {
         credential: response.credential,
       });
       toast.success("Google Login Successful!");

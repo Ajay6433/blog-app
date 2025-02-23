@@ -25,7 +25,7 @@ const BlogDetails = () => {
     const fetchBlog = async () => {
       try {
         const response = await axios.get<{ data: Blog }>(
-          `http://localhost:4000/api/v1/blog/${id}`
+          process.env.NEXT_PUBLIC_API_URL + `/blog/${id}`
         );
         setBlog(response.data.data);
       } catch (err) {

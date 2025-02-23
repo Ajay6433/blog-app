@@ -6,7 +6,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const Page = () => {
-  const API_URL = "http://localhost:4000/api/v1/createBlog";
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -55,7 +54,7 @@ const Page = () => {
     }
 
     try {
-      const response = await axios.post(API_URL, formData, {
+      const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/createBlog', formData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`, // ✅ Send token in header

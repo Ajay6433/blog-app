@@ -46,7 +46,7 @@ const EditBlogPage = () => {
     const fetchBlog = async () => {
       try {
         const response = await axios.get<{ data: Blog }>(
-          `http://localhost:4000/api/v1/blog/${id}`
+          process.env.NEXT_PUBLIC_API_URL + `/blog/${id}`          
         );
         setFormData(response.data.data);
       } catch (error) {
@@ -87,7 +87,7 @@ const EditBlogPage = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:4000/api/v1/updateBlog/${id}`,
+        process.env.NEXT_PUBLIC_API_URL + `/updateBlog/${id}`,
         formData,
         {
           headers: {
