@@ -86,7 +86,7 @@ const EditBlogPage = () => {
     }
 
     try {
-      const response = await axios.put(
+      await axios.put(
         process.env.NEXT_PUBLIC_API_URL + `/updateBlog/${id}`,
         formData,
         {
@@ -103,7 +103,7 @@ const EditBlogPage = () => {
       setTimeout(() => {
         router.push(`/blog/${id}`);
       }, 1500);
-    } catch (error) {
+    } catch (error:unknown) {
       console.error("Error updating blog:", error);
       const errorMessage =
         (error as any)?.response?.data?.message || "Failed to update blog.";

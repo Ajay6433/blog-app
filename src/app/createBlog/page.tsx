@@ -54,7 +54,7 @@ const Page = () => {
     }
 
     try {
-      const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + '/createBlog', formData, {
+      await axios.post(process.env.NEXT_PUBLIC_API_URL + '/createBlog', formData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`, // ✅ Send token in header

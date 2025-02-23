@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 const Hero = () => {
-  let data = [
+  const data = [
     {
       id: 1,
       image: "/blogging.png",

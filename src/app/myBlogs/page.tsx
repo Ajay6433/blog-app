@@ -82,7 +82,7 @@ const MyBlogsPage = () => {
   if (blogs.length === 0) {
     return (
       <div className="text-center min-h-[550px] text-gray-600 text-lg mt-10">
-        <p>You don't have any blogs yet. Start writing some!</p>
+        <p>You don&apos;t have any blogs yet. Start writing some!</p>
         <button
           onClick={() => router.push('/createBlog')}
           className="mt-4 px-4 py-2 bg-black text-white hover:bg-gray-800 transition"
