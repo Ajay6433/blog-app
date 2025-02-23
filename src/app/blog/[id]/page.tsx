@@ -26,7 +26,6 @@ const BlogDetails = () => {
         const response = await axios.get<{ data: Blog }>(
           `http://localhost:4000/api/v1/blog/${id}`
         );
-        toast.success(`${response.data.data.title} Blog fetched successfully!`);
         setBlog(response.data.data);
       } catch (err) {
         toast.error("Error fetching blog:");
@@ -36,10 +35,11 @@ const BlogDetails = () => {
         setLoading(false);
       }
     };
-
+    
     if (id) fetchBlog();
   }, [id]);
-
+  
+  toast.success(`Blog fetched successfully!`);
   if (loading) return <p className="text-center text-lg">Loading...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
