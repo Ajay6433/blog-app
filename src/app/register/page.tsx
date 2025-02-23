@@ -41,8 +41,10 @@ export default function RegisterPage() {
         credential: response.credential,
       });
       toast.success("Google Login Successful!");
-      router.push("/allBlogs");
       console.log("Google Login Response:", res.data);
+       // Store token & redirect
+       localStorage.setItem("token", res.data.token);
+       router.push("/allBlogs");
     } catch (error) {
       toast.error("Google login failed.");
       console.error("Google Login Error:", error);
