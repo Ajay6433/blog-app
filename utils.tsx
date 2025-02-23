@@ -5,7 +5,7 @@ import {jwtDecode} from 'jwt-decode';
 const getUserIdFromToken = () => {
   const token = localStorage.getItem('token');
   if (!token) return null;
-  const decodedToken = jwtDecode(token);
+  const decodedToken = jwtDecode<{ user: { _id: string } }>(token);
   return decodedToken.user._id; // Adjust based on your token's structure
 };
 
