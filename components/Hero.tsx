@@ -31,7 +31,7 @@ const Hero = () => {
       {data.map((item) => (
         <div
           key={item.id}
-          className="p-6 flex flex-col md:flex-row justify-center items-center gap-5 bg-white rounded-lg mb-6"
+          className="p-6 flex flex-col md:flex-row justify-center items-center gap-5 bg-white rounded-lg mb-1"
         >
           <Image
             src={item.image}
