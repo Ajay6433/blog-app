@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blog App
 
-## Getting Started
+A full-stack blog application that allows users to register, log in, create, update, delete, and view blog posts. Users can publish public blogs that everyone can see, and also create private blogs that only the owner can access and manage.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **User Authentication**: 
+  - Register and login using email/password or Google OAuth.
+  - Secure JWT-based authentication for protecting routes.
+- **Blog Operations**:
+  - **Create Blog**: Authenticated users can create new blog posts.
+  - **Update Blog**: Only the owner can update their blog posts.
+  - **Delete Blog**: Only the owner can delete their blog posts.
+  - **View Blog**: Public blogs are accessible to everyone, while private blogs are viewable only by the owner.
+  - **My Blogs**: A dedicated page for users to view their personal (both public and private) blogs.
+- **Responsive UI**: Built with Next.js and Tailwind CSS, ensuring a great experience on both mobile and desktop.
+- **Real-time Notifications**: Uses React Hot Toast for providing immediate feedback on user actions.
+- **RESTful API**: Built with Express, Node.js, and MongoDB using Mongoose.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: Next.js, React, Tailwind CSS, React Hot Toast
+- **Backend**: Express, Node.js, MongoDB, Mongoose
+- **Authentication**: JWT, Google OAuth (using google-auth-library)
+- **Tooling**: ESLint, Prettier, etc.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Installation
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js (v14 or later)
+- npm or yarn
+- A running MongoDB instance (local or cloud)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API Endpoints
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Authentication
+- `POST /api/v1/auth/register` - Register a new user.
+- `POST /api/v1/auth/login` - Log in with email and password.
+- `POST /api/v1/auth/googleLogin` - Register/Login with Google OAuth.
 
-## Deploy on Vercel
+### Blog Operations
+- `GET /api/v1/allBlogs` - Fetch all public blogs.
+- `GET /api/v1/myBlogs` - Fetch blogs created by the authenticated user.
+- `GET /api/v1/blog/:id` - Get details of a single blog.
+- `POST /api/v1/createBlog` - Create a new blog (protected).
+- `PUT /api/v1/updateBlog/:id` - Update a blog (protected, owner only).
+- `DELETE /api/v1/deleteBlog/:id` - Delete a blog (protected, owner only).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Routing Flow
+
+### Public Routes
+- **`/register`**: Register a new user.
+- **`/login`**: Log in a user.
+- **`/allBlogs`**: View all public blogs.
+- **`/blog/:id`**: View details of a single blog.  
+  _(If private, access is restricted to the owner.)_
+
+### Protected Routes (require a valid JWT token)
+- **`/createBlog`**: Create a new blog post.
+- **`/myBlogs`**: View blogs created by the logged-in user.
+- **`/editBlog/:id`**: Update a blog post (only if the user is the owner).
+- **`/deleteBlog/:id`**: Delete a blog post (only if the user is the owner).
+
+---
+
+## Contributing
+
+Contributions are welcome!  
+1. **Fork the repository.**
+2. **Create a new branch** for your feature or bug fix.
+3. **Submit a pull request** for review.
+
+## Contact
+- Ajaykhan6433@gmail.com 
